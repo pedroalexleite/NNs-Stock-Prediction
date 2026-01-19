@@ -1,0 +1,19 @@
+//upload "formulas.txt" into Google Drive
+//create Google Sheets file and run this code in the Google Apps Script extension
+
+function writeFormulasToSheet() {
+  const folder = DriveApp.getFoldersByName("Data").next(); //insert GD directory with "formulas.txt"
+  const file = folder.getFilesByName("formulas.txt").next();
+
+  const formulas = file.getBlob().getDataAsString().split("\n");
+
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+  let row = 1;
+  formulas.forEach(formula => {
+    sheet.getRange(row, 1).setValue(formula);
+    row += 1299;  // Move to the next row, separated by 1299 lines
+  });
+}
+
+//after running the code export the file with the name "dataset1.csv"
